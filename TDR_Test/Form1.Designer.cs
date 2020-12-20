@@ -34,7 +34,7 @@
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btnTest = new System.Windows.Forms.Button();
+            this.btnMeas = new System.Windows.Forms.Button();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.combUnit = new System.Windows.Forms.ComboBox();
             this.txMin = new System.Windows.Forms.TextBox();
@@ -90,7 +90,7 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.btnTest);
+            this.groupBox1.Controls.Add(this.btnMeas);
             this.groupBox1.Controls.Add(this.groupBox7);
             this.groupBox1.Controls.Add(this.groupBox6);
             this.groupBox1.Controls.Add(this.groupBox5);
@@ -112,14 +112,15 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
-            // btnTest
+            // btnMeas
             // 
-            this.btnTest.Location = new System.Drawing.Point(754, 49);
-            this.btnTest.Name = "btnTest";
-            this.btnTest.Size = new System.Drawing.Size(75, 23);
-            this.btnTest.TabIndex = 20;
-            this.btnTest.Text = "量测";
-            this.btnTest.UseVisualStyleBackColor = true;
+            this.btnMeas.Location = new System.Drawing.Point(754, 49);
+            this.btnMeas.Name = "btnMeas";
+            this.btnMeas.Size = new System.Drawing.Size(75, 23);
+            this.btnMeas.TabIndex = 20;
+            this.btnMeas.Text = "量测";
+            this.btnMeas.UseVisualStyleBackColor = true;
+            this.btnMeas.Click += new System.EventHandler(this.btnMeas_Click);
             // 
             // groupBox7
             // 
@@ -143,28 +144,30 @@
             this.combUnit.Items.AddRange(new object[] {
             "欧姆",
             "%"});
-            this.combUnit.Location = new System.Drawing.Point(85, 13);
+            this.combUnit.Location = new System.Drawing.Point(85, 14);
             this.combUnit.Name = "combUnit";
             this.combUnit.Size = new System.Drawing.Size(79, 20);
             this.combUnit.TabIndex = 11;
             // 
             // txMin
             // 
-            this.txMin.Location = new System.Drawing.Point(123, 42);
+            this.txMin.Location = new System.Drawing.Point(123, 38);
             this.txMin.Name = "txMin";
             this.txMin.Size = new System.Drawing.Size(41, 21);
             this.txMin.TabIndex = 10;
+            this.txMin.Text = "15";
             // 
             // txMax
             // 
-            this.txMax.Location = new System.Drawing.Point(36, 42);
+            this.txMax.Location = new System.Drawing.Point(36, 38);
             this.txMax.Name = "txMax";
             this.txMax.Size = new System.Drawing.Size(41, 21);
             this.txMax.TabIndex = 9;
+            this.txMax.Text = "15";
             // 
             // txTargetValue
             // 
-            this.txTargetValue.Location = new System.Drawing.Point(36, 16);
+            this.txTargetValue.Location = new System.Drawing.Point(36, 14);
             this.txTargetValue.Name = "txTargetValue";
             this.txTargetValue.Size = new System.Drawing.Size(41, 21);
             this.txTargetValue.TabIndex = 8;
@@ -172,7 +175,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(83, 46);
+            this.label10.Location = new System.Drawing.Point(83, 42);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(35, 12);
             this.label10.TabIndex = 6;
@@ -181,7 +184,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(6, 45);
+            this.label9.Location = new System.Drawing.Point(6, 42);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(35, 12);
             this.label9.TabIndex = 5;
@@ -190,7 +193,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(6, 20);
+            this.label8.Location = new System.Drawing.Point(6, 18);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(35, 12);
             this.label8.TabIndex = 4;
@@ -236,7 +239,7 @@
             // 
             // txIndex
             // 
-            this.txIndex.Location = new System.Drawing.Point(66, 15);
+            this.txIndex.Location = new System.Drawing.Point(66, 14);
             this.txIndex.Name = "txIndex";
             this.txIndex.Size = new System.Drawing.Size(62, 21);
             this.txIndex.TabIndex = 0;
@@ -640,7 +643,7 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Button btnTest;
+        private System.Windows.Forms.Button btnMeas;
     }
 }
 

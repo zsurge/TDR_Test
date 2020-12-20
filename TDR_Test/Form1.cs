@@ -23,6 +23,9 @@ namespace TDR_Test
 
         E5080B analyzer = new E5080B();
         LoggerHelper logger = new LoggerHelper();
+
+        public const int DIFFERENCE = 1;
+        public const int SINGLE = 2;
         private void Form1_Load(object sender, EventArgs e)
         {
             //初始化状态栏
@@ -157,7 +160,7 @@ namespace TDR_Test
             float xbegin = result.Count * offsetValue;
             float xend = result.Count * (1 - offsetValue);
 
-            //获取有区域的LIST
+            //获取有效区域的LIST
             List<float> tmpResult = result.Skip((int)xbegin).Take((int)(result.Count - xend)).ToList();
 
             //设置网格间距
@@ -175,6 +178,51 @@ namespace TDR_Test
             for (int i = 0; i < result.Count; i++)
             {
                 chart1.Series[0].Points.AddXY(i, result[i]);
+            }
+
+            //生成上半位有效区域
+            chart1.Series[1].Points.AddXY(xbegin, 200);
+            chart1.Series[1].Points.AddXY(xbegin, 115);
+            chart1.Series[1].Points.AddXY(xend, 115);
+            chart1.Series[1].Points.AddXY(xend, 200);
+
+            //生成下半部有效区域
+            chart1.Series[2].Points.AddXY(xbegin, 0);
+            chart1.Series[2].Points.AddXY(xbegin, 85);
+            chart1.Series[2].Points.AddXY(xend, 85);
+            chart1.Series[2].Points.AddXY(xend, 0);
+        }
+
+        private void CreateMeasChart(List<float> measData)
+        {
+            foreach (var series in chart1.Series)
+            {
+                series.Points.Clear();
+            }
+
+            //计算有效区域起始结束位置   
+            float offsetValue = Convert.ToSingle(60) / 2 / 100;
+            float xbegin = measData.Count * offsetValue;
+            float xend = measData.Count * (1 - offsetValue);
+
+            //获取有效区域的LIST
+            List<float> tmpResult = measData.Skip((int)xbegin).Take((int)(measData.Count - xend)).ToList();
+
+            //设置网格间距
+            chart1.ChartAreas[0].AxisX.Interval = (float)measData.Count / 10;//X轴间距
+            chart1.ChartAreas[0].AxisY.Interval = 50;//Y轴间距.
+            //设置Y坐标最大值
+            chart1.ChartAreas[0].AxisY.Maximum = 200;
+
+            //求最大值及最小值
+            chart1.Series[0].LegendText = "平均值：" + tmpResult.Average().ToString();
+            chart1.Series[1].LegendText = "最大值:" + tmpResult.Max().ToString();
+            chart1.Series[2].LegendText = "最小值:" + tmpResult.Min().ToString();
+
+            //生成测试数据曲线
+            for (int i = 0; i < measData.Count; i++)
+            {
+                chart1.Series[0].Points.AddXY(i, measData[i]);
             }
 
             //生成上半位有效区域
@@ -334,7 +382,7 @@ namespace TDR_Test
             //查找tdd22的索引值
             for (int i = 0; i < tdd22_array.Length; i++)
             {
-                //logger.Trace(tdd22_array[i]);
+                logger.Trace(tdd22_array[i]);
                 if (Convert.ToSingle(tdd22_array[i]) > Convert.ToSingle(txIndex.Text))
                 {
                     logger.Debug((i-1).ToString() + " = " + tdd22_array[i-1]);
@@ -353,7 +401,7 @@ namespace TDR_Test
             string[] tdd11_array = result.Split(new char[] { ',' });
             for (int i = 0; i < tdd11_array.Length; i++)
             {
-                //logger.Info(tdd11_array[i]);
+                logger.Info(tdd11_array[i]);
                 if (Convert.ToSingle(tdd11_array[i]) > Convert.ToSingle(txIndex.Text))
                 {
                     logger.Debug((i-1).ToString() + " = " + tdd11_array[i-1]);
@@ -367,22 +415,92 @@ namespace TDR_Test
             GetIndex.isOpen = true;
         }
 
-        private void startMeasuration()
+      
+        private void startMeasuration(int channel)
+        {
+            string result = string.Empty;
+            int index = 0;
+            string cmd1, cmd2, cmd3, cmd4, cmd5, cmd6;
+
+            if (channel == DIFFERENCE)
+            {
+                index = GetIndex.tdd11IndexValue;
+                cmd1 = ":CALC:PAR:SEL \"win1_tr1\"";
+            }
+            else if (channel == SINGLE)
+            {
+                index = GetIndex.tdd22IndexValue;
+                cmd1 = ":CALC:PAR:SEL \"win1_tr2\"";
+            }
+            else
+            {
+                cmd1 = ":CALC:PAR:SEL \"win1_tr1\"";
+            }
+            analyzer.ExecuteCmd(cmd1);
+
+            cmd2 = ":CALCulate1:TRANsform:TIME:STARt?";
+            analyzer.QueryCommand(cmd2, out result, 256);
+            SetRecvListSafe(result);
+            result = string.Empty;
+
+            cmd3 = "DISPlay:ENABle ON";
+            analyzer.ExecuteCmd(cmd3);
+            
+            analyzer.ExecuteCmd(cmd1);
+
+            cmd5 = ":INITiate1:CONTinuous ON";
+            analyzer.ExecuteCmd(cmd5);
+            analyzer.viClear();
+
+            cmd6 = ":CALCulate1:DATA? FDATa";
+            analyzer.QueryCommand(cmd6, out result, 200000);
+
+            //获取要生成报表的数据
+            CreateMeasChart(packetMaesData(result,index));
+
+            result = string.Empty;    
+            analyzer.QueryErrorStatus(out result);
+        }
+
+        private List<float> packetMaesData(string measBuff,int index)
+        {
+            List<float> result = new List<float>();
+            float tmp = 0;
+            string[] tmpArray = measBuff.Split(new char[] { ',' });
+            for (int i = index; i < tmpArray.Length; i++)
+            {
+                tmp = Convert.ToSingle(tmpArray[i]);
+                if (tmp < Convert.ToSingle(txIndex.Text))
+                {
+                    logger.Trace(tmpArray[i]);
+                    result.Add(tmp);
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return result;
+        }
+
+        private void btnMeas_Click(object sender, EventArgs e)
         {
             //这里需要分单端测试和差分测试
             if (radioSingle.Checked)
             {
                 //这里是单端测试
+                startMeasuration(SINGLE);
             }
             else if (radioDiff.Checked)
             {
                 //这里是差分测试
-
+                startMeasuration(DIFFERENCE);
+            }
+            else
+            {
+                MessageBox.Show("please select test mode");
             }
         }
-
-
-
     }//end form class
 
     public static class GetIndex
