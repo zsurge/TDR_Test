@@ -190,14 +190,9 @@ namespace TDR_Test
             chart1.Series[2].Points.AddXY(xend, 0);
         }
 
-        private void btnOpen_Click(object sender, EventArgs e)
-        {
-            //int error = analyzer.Open(combDevString.Text);
-            //string idn;
-            //error = analyzer.GetInstrumentIdentifier(out idn);
-            //error = analyzer.ClearAllErrorQueue();
-            //error = analyzer.Preset();
 
+        private void CreateReport()
+        {
             OpenFileDialog openFile = new OpenFileDialog();
             openFile.Filter = "Excel(*.csv)|*.csv";
             openFile.InitialDirectory = Environment.CurrentDirectory;
@@ -210,7 +205,41 @@ namespace TDR_Test
                 return;
 
             CreateChart(filePath);
+        }
 
+        private void btnOpen_Click(object sender, EventArgs e)
+        {
+            int error = analyzer.Open(combDevString.Text);
+            string idn;
+            error = analyzer.GetInstrumentIdentifier(out idn);
+            //error = analyzer.ClearAllErrorQueue();
+            //error = analyzer.Preset();
+            
+            listboxResult.Items.Add(idn);
+            listboxResult.TopIndex = listboxResult.Items.Count - 1;
+        }
+
+        private void btnSend_Click(object sender, EventArgs e)
+        {
+            analyzer.ExecuteCommand(combCommand.SelectedItem.ToString());
+        }
+
+        private void btnSendAndRead_Click(object sender, EventArgs e)
+        {
+            string result = string.Empty;
+            analyzer.QueryCommand(combCommand.SelectedItem.ToString(),out result);
+            listboxResult.Items.Add(result);
+            listboxResult.TopIndex = listboxResult.Items.Count - 1;
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {    
+            analyzer.viClear();
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            analyzer.viClose();
         }
     }//end form class
 

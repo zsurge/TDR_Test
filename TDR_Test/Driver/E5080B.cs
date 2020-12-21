@@ -35,7 +35,7 @@ namespace TDR_Test.Driver
             viError = visa32.viGetAttribute(analyzerSession, visa32.VI_ATTR_RSRC_CLASS, attr);
             viError = visa32.viSetAttribute(analyzerSession, visa32.VI_ATTR_TERMCHAR_EN, visa32.VI_TRUE);
             viError = visa32.viSetAttribute(analyzerSession, visa32.VI_ATTR_TERMCHAR, 0x0A);
-            viError = visa32.viSetAttribute(analyzerSession, visa32.VI_ATTR_TMO_VALUE, 20000);
+            viError = visa32.viSetAttribute(analyzerSession, visa32.VI_ATTR_TMO_VALUE, 2000);
 
             return viError;
         }
@@ -131,6 +131,16 @@ namespace TDR_Test.Driver
                    response;
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
             return QueryErrorStatus(out response);      /* Make sure all errors had been cleaned up. */
+        }
+
+        public void viClear()
+        {
+            visa32.viClear(analyzerSession);
+        }
+
+        public void viClose()
+        {
+            visa32.viClose(analyzerSession);
         }
 
         /* SYST:ERR? */

@@ -34,6 +34,7 @@
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnSendAndRead = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
             this.txTimeOut = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -69,6 +70,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnSendAndRead);
             this.groupBox1.Controls.Add(this.btnClear);
             this.groupBox1.Controls.Add(this.txTimeOut);
             this.groupBox1.Controls.Add(this.label5);
@@ -80,20 +82,31 @@
             this.groupBox1.Controls.Add(this.btnRefresh);
             this.groupBox1.Controls.Add(this.groupBox2);
             this.groupBox1.Controls.Add(this.groupBox4);
-            this.groupBox1.Location = new System.Drawing.Point(1, -7);
+            this.groupBox1.Location = new System.Drawing.Point(1, -5);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(771, 81);
+            this.groupBox1.Size = new System.Drawing.Size(1087, 79);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
+            // btnSendAndRead
+            // 
+            this.btnSendAndRead.Location = new System.Drawing.Point(673, 49);
+            this.btnSendAndRead.Name = "btnSendAndRead";
+            this.btnSendAndRead.Size = new System.Drawing.Size(75, 23);
+            this.btnSendAndRead.TabIndex = 16;
+            this.btnSendAndRead.Text = "发和收";
+            this.btnSendAndRead.UseVisualStyleBackColor = true;
+            this.btnSendAndRead.Click += new System.EventHandler(this.btnSendAndRead_Click);
+            // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(673, 49);
+            this.btnClear.Location = new System.Drawing.Point(754, 13);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 23);
             this.btnClear.TabIndex = 15;
             this.btnClear.Text = "清空";
             this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // txTimeOut
             // 
@@ -127,29 +140,29 @@
             ":CALCulate1:TRANsform:TIME:STOP?",
             ":INITiate1:CONTinuous ON",
             ":CALC:PAR:SEL \"win1_tr2\"",
-            ":CALCulate1:DATA?FDATa",
+            ":CALCulate1:DATA? FDATa",
             ":CALC:PAR:SEL \"win1_tr1\"",
-            ":CALCulate1:DATA?FDATA",
+            ":CALCulate1:DATA? FDATA",
             ":CALC:PAR:SEL\"win1_tr1\"",
             ":CALCulate1:TRANsform:TIME:STARt?",
             ":DISPlay:ENABle ON",
             ":CALC:PAR:SEL\"win1_tr1\"",
             ":INITiatel:CONTinuous ON",
-            ":CALCulate1:DATA?FDATa",
+            ":CALCulate1:DATA? FDATa",
             "SYST:ERROR?",
             ":CALC:PAR:SEL\"win1_tr2\"",
             ":CALCulate1:TRANsform:TIME:STARt?",
             ":DISplay:ENABle ON",
             ":CALC:PAR:SEL\"win1_tr2\"",
             ":INITiatel:CONTinuous ON",
-            ":CALCulate1:DATA?FDATa",
+            ":CALCulate1:DATA? FDATa",
             "SYST:ERROR?",
             ":CALC:PAR:SEL\"win1_tr1\"",
             ":CALCulate1:TRANsform:TIME:STARt?",
             ":DISplay:ENABle ON",
             ":CALC:PAR:SEL\"win1_tr1\"",
             ":INITiate1:CONTinuous ON",
-            ":CALCulate1:DATA?FDATa",
+            ":CALCulate1:DATA? FDATa",
             "SYST:ERROR?"});
             this.combCommand.Location = new System.Drawing.Point(181, 52);
             this.combCommand.Name = "combCommand";
@@ -183,6 +196,7 @@
             this.btnSend.TabIndex = 10;
             this.btnSend.Text = "发送";
             this.btnSend.UseVisualStyleBackColor = true;
+            this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
             // 
             // groupBox8
             // 
@@ -210,6 +224,7 @@
             this.combDevString.Name = "combDevString";
             this.combDevString.Size = new System.Drawing.Size(247, 20);
             this.combDevString.TabIndex = 5;
+            this.combDevString.Text = "USB0::0x2A8D::0x7901::MY59100857::0::INSTR";
             // 
             // btnRefresh
             // 
@@ -369,6 +384,7 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "Form1";
             this.Text = "Test V1.0.1";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -414,6 +430,7 @@
         private System.Windows.Forms.ToolStripStatusLabel localIP;
         private System.Windows.Forms.ToolStripStatusLabel localTime;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private System.Windows.Forms.Button btnSendAndRead;
     }
 }
 
