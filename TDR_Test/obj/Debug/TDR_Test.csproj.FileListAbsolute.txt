@@ -19,3 +19,4 @@ H:\TSJ PRO\TDR_Test\TDR_Test\obj\Debug\TDR_Test.csproj.CoreCompileInputs.cache
 H:\TSJ PRO\TDR_Test\TDR_Test\obj\Debug\TDR_Test.csproj.CopyComplete
 H:\TSJ PRO\TDR_Test\TDR_Test\obj\Debug\TDR_Test.exe
 H:\TSJ PRO\TDR_Test\TDR_Test\obj\Debug\TDR_Test.pdb
+H:\TSJ PRO\TDR_Test\TDR_Test\obj\Debug\TDR_Test.csprojAssemblyReference.cache
