@@ -1,0 +1,18 @@
+H:\TSJ PRO\TDR_Test\TDR_Test\bin\Debug\TDR_Test.exe.config
+H:\TSJ PRO\TDR_Test\TDR_Test\bin\Debug\TDR_Test.exe
+H:\TSJ PRO\TDR_Test\TDR_Test\bin\Debug\TDR_Test.pdb
+H:\TSJ PRO\TDR_Test\TDR_Test\obj\Debug\TDR_Test.Properties.Resources.resources
+H:\TSJ PRO\TDR_Test\TDR_Test\obj\Debug\TDR_Test.csproj.GenerateResource.cache
+H:\TSJ PRO\TDR_Test\TDR_Test\obj\Debug\TDR_Test.csproj.CoreCompileInputs.cache
+H:\TSJ PRO\TDR_Test\TDR_Test\obj\Debug\TDR_Test.exe
+H:\TSJ PRO\TDR_Test\TDR_Test\obj\Debug\TDR_Test.pdb
+H:\TSJ PRO\TDR_Test\TDR_Test\obj\Debug\TDR_Test.csprojAssemblyReference.cache
+H:\TSJ PRO\TDR_Test\TDR_Test\obj\Debug\TDR_Test.common.resources
+F:\DEMO\TDR_Test\TDR_Test\TDR_Test\obj\Debug\TDR_Test.Form1.resources
+F:\DEMO\TDR_Test\TDR_Test\TDR_Test\obj\Debug\TDR_Test.Properties.Resources.resources
+F:\DEMO\TDR_Test\TDR_Test\TDR_Test\obj\Debug\TDR_Test.csproj.GenerateResource.cache
+F:\DEMO\TDR_Test\TDR_Test\TDR_Test\bin\Debug\TDR_Test.exe.config
+F:\DEMO\TDR_Test\TDR_Test\TDR_Test\bin\Debug\TDR_Test.exe
+F:\DEMO\TDR_Test\TDR_Test\TDR_Test\bin\Debug\TDR_Test.pdb
+F:\DEMO\TDR_Test\TDR_Test\TDR_Test\obj\Debug\TDR_Test.exe
+F:\DEMO\TDR_Test\TDR_Test\TDR_Test\obj\Debug\TDR_Test.pdb
