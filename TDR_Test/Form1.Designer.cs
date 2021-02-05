@@ -28,6 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnClear = new System.Windows.Forms.Button();
             this.txTimeOut = new System.Windows.Forms.TextBox();
@@ -52,12 +55,14 @@
             this.info = new System.Windows.Forms.ToolStripStatusLabel();
             this.localIP = new System.Windows.Forms.ToolStripStatusLabel();
             this.localTime = new System.Windows.Forms.ToolStripStatusLabel();
+            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.groupBox1.SuspendLayout();
             this.groupBox8.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.localStatusStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -278,9 +283,9 @@
             // 
             this.groupBox3.Controls.Add(this.listboxResult);
             this.groupBox3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.groupBox3.Location = new System.Drawing.Point(1, 71);
+            this.groupBox3.Location = new System.Drawing.Point(2, 628);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(771, 329);
+            this.groupBox3.Size = new System.Drawing.Size(1097, 96);
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             // 
@@ -289,10 +294,10 @@
             this.listboxResult.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.listboxResult.FormattingEnabled = true;
             this.listboxResult.ItemHeight = 12;
-            this.listboxResult.Location = new System.Drawing.Point(-1, 11);
+            this.listboxResult.Location = new System.Drawing.Point(-2, 12);
             this.listboxResult.Name = "listboxResult";
             this.listboxResult.ScrollAlwaysVisible = true;
-            this.listboxResult.Size = new System.Drawing.Size(772, 312);
+            this.listboxResult.Size = new System.Drawing.Size(1093, 84);
             this.listboxResult.TabIndex = 0;
             // 
             // localStatusStrip
@@ -301,9 +306,9 @@
             this.info,
             this.localIP,
             this.localTime});
-            this.localStatusStrip.Location = new System.Drawing.Point(0, 398);
+            this.localStatusStrip.Location = new System.Drawing.Point(0, 727);
             this.localStatusStrip.Name = "localStatusStrip";
-            this.localStatusStrip.Size = new System.Drawing.Size(777, 22);
+            this.localStatusStrip.Size = new System.Drawing.Size(1100, 22);
             this.localStatusStrip.TabIndex = 2;
             this.localStatusStrip.Text = "statusStrip1";
             // 
@@ -316,7 +321,7 @@
             // localIP
             // 
             this.localIP.Name = "localIP";
-            this.localIP.Size = new System.Drawing.Size(691, 17);
+            this.localIP.Size = new System.Drawing.Size(1014, 17);
             this.localIP.Spring = true;
             // 
             // localTime
@@ -324,11 +329,29 @@
             this.localTime.Name = "localTime";
             this.localTime.Size = new System.Drawing.Size(0, 17);
             // 
+            // chart1
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
+            this.chart1.Location = new System.Drawing.Point(0, 80);
+            this.chart1.Name = "chart1";
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chart1.Series.Add(series1);
+            this.chart1.Size = new System.Drawing.Size(1093, 554);
+            this.chart1.TabIndex = 3;
+            this.chart1.Text = "chart1";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(777, 420);
+            this.ClientSize = new System.Drawing.Size(1100, 749);
+            this.Controls.Add(this.chart1);
             this.Controls.Add(this.localStatusStrip);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox1);
@@ -346,6 +369,7 @@
             this.groupBox3.ResumeLayout(false);
             this.localStatusStrip.ResumeLayout(false);
             this.localStatusStrip.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -377,6 +401,7 @@
         private System.Windows.Forms.ToolStripStatusLabel info;
         private System.Windows.Forms.ToolStripStatusLabel localIP;
         private System.Windows.Forms.ToolStripStatusLabel localTime;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
     }
 }
 
