@@ -77,7 +77,8 @@ namespace TDR_Test
             chart1.Series[0].LegendText = "测试曲线";
             chart1.Series[0].ChartType = SeriesChartType.Spline;
             chart1.Series[0].BorderWidth = 2;
-
+            chart1.Series[1].BorderWidth = 2;
+            chart1.Series[2].BorderWidth = 2;
 
             //背景灰色
             chart1.BackColor = Color.Gray;
@@ -87,6 +88,8 @@ namespace TDR_Test
             chart1.ChartAreas[0].AxisY.LineColor = Color.Black;
             //线条黄色
             chart1.Series[0].Color = Color.Yellow; //线条颜色
+            chart1.Series[1].Color = Color.Red; //线条颜色
+            chart1.Series[2].Color = Color.Red; //线条颜色
 
             //网格线颜色白色
             chart1.ChartAreas[0].AxisX.MajorGrid.LineColor = Color.White;
@@ -113,27 +116,78 @@ namespace TDR_Test
         /// </summary>
         /// <param name="filePath"></param> 
         /// <returns></returns>
-        private List<PointF> ReaderFile(string filePath)
+        private List<float> ReaderFile(string filePath)
         {
             int i = 0;
 
             //读取文件的源路径及其读取流            
-            StreamReader srReadFile = new StreamReader(filePath);
-            List<PointF> result = new List<PointF>();  //数据
-            string str = srReadFile.ReadLine();//去掉第一行
+            StreamReader srReadFile = new StreamReader(filePath, Encoding.Default);
+            List<float> result = new List<float>();  //数据
+
             //读取流直至文件末尾结束
             while (!srReadFile.EndOfStream)
-            {  
-                float tmpData = Convert.ToSingle(srReadFile.ReadLine());
-                i++;
-                if (i > 317)
+            {
+                string str = srReadFile.ReadLine().Replace("\0", "");
+
+                if (i++ > 317 && str != "")
                 {
-                    PointF p = new PointF(i - 318, tmpData);
-                    result.Add(p);
+                    float tmpData = Convert.ToSingle(str);
+                    if (tmpData <= 200.0)
+                    {
+                        result.Add(tmpData);
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
             }
+            srReadFile.Close();
 
             return result;
+        }
+
+        private void CreateChart(string filePath)
+        {
+            //读取文件获取数据数据
+            List<float> result = ReaderFile(filePath);
+
+            //计算有效区域起始结束位置
+            float offsetValue = Convert.ToSingle(30) / 2 / 100;
+            float xbegin = result.Count * offsetValue;
+            float xend = result.Count * (1 - offsetValue);
+
+            //获取有区域的LIST
+            List<float> tmpResult = result.Skip((int)xbegin).Take((int)(result.Count - xend)).ToList();
+
+            //设置网格间距
+            chart1.ChartAreas[0].AxisX.Interval = (float)result.Count / 10;//X轴间距
+            chart1.ChartAreas[0].AxisY.Interval = 50;//Y轴间距.
+            //设置Y坐标最大值
+            chart1.ChartAreas[0].AxisY.Maximum = 200;
+
+            //求最大值及最小值
+            chart1.Series[0].LegendText = "平均值：" + tmpResult.Average().ToString();
+            chart1.Series[1].LegendText = "最大值:" + tmpResult.Max().ToString();
+            chart1.Series[2].LegendText = "最小值:" + tmpResult.Min().ToString();
+
+            //生成测试数据曲线
+            for (int i = 0; i < result.Count; i++)
+            {
+                chart1.Series[0].Points.AddXY(i, result[i]);
+            }
+
+            //生成上半位有效区域
+            chart1.Series[1].Points.AddXY(xbegin, 200);
+            chart1.Series[1].Points.AddXY(xbegin, 115);
+            chart1.Series[1].Points.AddXY(xend, 115);
+            chart1.Series[1].Points.AddXY(xend, 200);
+
+            //生成下半部有效区域
+            chart1.Series[2].Points.AddXY(xbegin, 0);
+            chart1.Series[2].Points.AddXY(xbegin, 85);
+            chart1.Series[2].Points.AddXY(xend, 85);
+            chart1.Series[2].Points.AddXY(xend, 0);
         }
 
         private void btnOpen_Click(object sender, EventArgs e)
@@ -155,17 +209,8 @@ namespace TDR_Test
             if (string.IsNullOrEmpty(fileType))
                 return;
 
+            CreateChart(filePath);
 
-            List<PointF> result = ReaderFile(filePath);
-
-            chart1.ChartAreas[0].AxisX.Interval = (float)result.Count / 10;//X轴间距
-            chart1.ChartAreas[0].AxisY.Interval = 50;//Y轴间距
-            chart1.ChartAreas[0].AxisY.Maximum = 200;
-
-            for (int i = 0; i < result.Count; i++)
-            {
-                chart1.Series[0].Points.AddXY(result[i].X, result[i].Y);
-            }
         }
     }//end form class
 
