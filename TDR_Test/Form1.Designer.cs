@@ -34,6 +34,23 @@
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnTest = new System.Windows.Forms.Button();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.combUnit = new System.Windows.Forms.ComboBox();
+            this.txMin = new System.Windows.Forms.TextBox();
+            this.txMax = new System.Windows.Forms.TextBox();
+            this.txTargetValue = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txOffset = new System.Windows.Forms.TextBox();
+            this.txIndex = new System.Windows.Forms.TextBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.radioDiff = new System.Windows.Forms.RadioButton();
+            this.radioSingle = new System.Windows.Forms.RadioButton();
             this.btnSendAndRead = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
             this.txTimeOut = new System.Windows.Forms.TextBox();
@@ -60,6 +77,9 @@
             this.localTime = new System.Windows.Forms.ToolStripStatusLabel();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.groupBox1.SuspendLayout();
+            this.groupBox7.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.groupBox8.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -70,6 +90,10 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnTest);
+            this.groupBox1.Controls.Add(this.groupBox7);
+            this.groupBox1.Controls.Add(this.groupBox6);
+            this.groupBox1.Controls.Add(this.groupBox5);
             this.groupBox1.Controls.Add(this.btnSendAndRead);
             this.groupBox1.Controls.Add(this.btnClear);
             this.groupBox1.Controls.Add(this.txTimeOut);
@@ -84,9 +108,172 @@
             this.groupBox1.Controls.Add(this.groupBox4);
             this.groupBox1.Location = new System.Drawing.Point(1, -5);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1087, 79);
+            this.groupBox1.Size = new System.Drawing.Size(1223, 79);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
+            // 
+            // btnTest
+            // 
+            this.btnTest.Location = new System.Drawing.Point(754, 49);
+            this.btnTest.Name = "btnTest";
+            this.btnTest.Size = new System.Drawing.Size(75, 23);
+            this.btnTest.TabIndex = 20;
+            this.btnTest.Text = "量测";
+            this.btnTest.UseVisualStyleBackColor = true;
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.combUnit);
+            this.groupBox7.Controls.Add(this.txMin);
+            this.groupBox7.Controls.Add(this.txMax);
+            this.groupBox7.Controls.Add(this.txTargetValue);
+            this.groupBox7.Controls.Add(this.label10);
+            this.groupBox7.Controls.Add(this.label9);
+            this.groupBox7.Controls.Add(this.label8);
+            this.groupBox7.Location = new System.Drawing.Point(1047, 9);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(170, 66);
+            this.groupBox7.TabIndex = 19;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "测量范围";
+            // 
+            // combUnit
+            // 
+            this.combUnit.FormattingEnabled = true;
+            this.combUnit.Items.AddRange(new object[] {
+            "欧姆",
+            "%"});
+            this.combUnit.Location = new System.Drawing.Point(85, 13);
+            this.combUnit.Name = "combUnit";
+            this.combUnit.Size = new System.Drawing.Size(79, 20);
+            this.combUnit.TabIndex = 11;
+            // 
+            // txMin
+            // 
+            this.txMin.Location = new System.Drawing.Point(123, 42);
+            this.txMin.Name = "txMin";
+            this.txMin.Size = new System.Drawing.Size(41, 21);
+            this.txMin.TabIndex = 10;
+            // 
+            // txMax
+            // 
+            this.txMax.Location = new System.Drawing.Point(36, 42);
+            this.txMax.Name = "txMax";
+            this.txMax.Size = new System.Drawing.Size(41, 21);
+            this.txMax.TabIndex = 9;
+            // 
+            // txTargetValue
+            // 
+            this.txTargetValue.Location = new System.Drawing.Point(36, 16);
+            this.txTargetValue.Name = "txTargetValue";
+            this.txTargetValue.Size = new System.Drawing.Size(41, 21);
+            this.txTargetValue.TabIndex = 8;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(83, 46);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(35, 12);
+            this.label10.TabIndex = 6;
+            this.label10.Text = "下限:";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(6, 45);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(35, 12);
+            this.label9.TabIndex = 5;
+            this.label9.Text = "上限:";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(6, 20);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(35, 12);
+            this.label8.TabIndex = 4;
+            this.label8.Text = "阻抗:";
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.label7);
+            this.groupBox6.Controls.Add(this.label6);
+            this.groupBox6.Controls.Add(this.txOffset);
+            this.groupBox6.Controls.Add(this.txIndex);
+            this.groupBox6.Location = new System.Drawing.Point(909, 7);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(132, 66);
+            this.groupBox6.TabIndex = 18;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "X轴量测试范围";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 44);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(47, 12);
+            this.label7.TabIndex = 3;
+            this.label7.Text = "偏移量:";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 18);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(59, 12);
+            this.label6.TabIndex = 2;
+            this.label6.Text = "开路位置:";
+            // 
+            // txOffset
+            // 
+            this.txOffset.Location = new System.Drawing.Point(66, 38);
+            this.txOffset.Name = "txOffset";
+            this.txOffset.Size = new System.Drawing.Size(62, 21);
+            this.txOffset.TabIndex = 1;
+            // 
+            // txIndex
+            // 
+            this.txIndex.Location = new System.Drawing.Point(66, 15);
+            this.txIndex.Name = "txIndex";
+            this.txIndex.Size = new System.Drawing.Size(62, 21);
+            this.txIndex.TabIndex = 0;
+            this.txIndex.Text = "200";
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.radioDiff);
+            this.groupBox5.Controls.Add(this.radioSingle);
+            this.groupBox5.Location = new System.Drawing.Point(835, 9);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(68, 66);
+            this.groupBox5.TabIndex = 17;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "测试模式";
+            // 
+            // radioDiff
+            // 
+            this.radioDiff.AutoSize = true;
+            this.radioDiff.Location = new System.Drawing.Point(6, 39);
+            this.radioDiff.Name = "radioDiff";
+            this.radioDiff.Size = new System.Drawing.Size(47, 16);
+            this.radioDiff.TabIndex = 1;
+            this.radioDiff.TabStop = true;
+            this.radioDiff.Text = "差分";
+            this.radioDiff.UseVisualStyleBackColor = true;
+            // 
+            // radioSingle
+            // 
+            this.radioSingle.AutoSize = true;
+            this.radioSingle.Location = new System.Drawing.Point(6, 20);
+            this.radioSingle.Name = "radioSingle";
+            this.radioSingle.Size = new System.Drawing.Size(47, 16);
+            this.radioSingle.TabIndex = 0;
+            this.radioSingle.TabStop = true;
+            this.radioSingle.Text = "单端";
+            this.radioSingle.UseVisualStyleBackColor = true;
             // 
             // btnSendAndRead
             // 
@@ -300,9 +487,9 @@
             // 
             this.groupBox3.Controls.Add(this.listboxResult);
             this.groupBox3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.groupBox3.Location = new System.Drawing.Point(2, 628);
+            this.groupBox3.Location = new System.Drawing.Point(0, 662);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(1097, 96);
+            this.groupBox3.Size = new System.Drawing.Size(1230, 104);
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             // 
@@ -311,10 +498,10 @@
             this.listboxResult.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.listboxResult.FormattingEnabled = true;
             this.listboxResult.ItemHeight = 12;
-            this.listboxResult.Location = new System.Drawing.Point(-2, 12);
+            this.listboxResult.Location = new System.Drawing.Point(0, 8);
             this.listboxResult.Name = "listboxResult";
             this.listboxResult.ScrollAlwaysVisible = true;
-            this.listboxResult.Size = new System.Drawing.Size(1093, 84);
+            this.listboxResult.Size = new System.Drawing.Size(1230, 96);
             this.listboxResult.TabIndex = 0;
             // 
             // localStatusStrip
@@ -323,9 +510,9 @@
             this.info,
             this.localIP,
             this.localTime});
-            this.localStatusStrip.Location = new System.Drawing.Point(0, 727);
+            this.localStatusStrip.Location = new System.Drawing.Point(0, 769);
             this.localStatusStrip.Name = "localStatusStrip";
-            this.localStatusStrip.Size = new System.Drawing.Size(1100, 22);
+            this.localStatusStrip.Size = new System.Drawing.Size(1230, 22);
             this.localStatusStrip.TabIndex = 2;
             this.localStatusStrip.Text = "statusStrip1";
             // 
@@ -338,7 +525,7 @@
             // localIP
             // 
             this.localIP.Name = "localIP";
-            this.localIP.Size = new System.Drawing.Size(1014, 17);
+            this.localIP.Size = new System.Drawing.Size(1144, 17);
             this.localIP.Spring = true;
             // 
             // localTime
@@ -369,7 +556,7 @@
             this.chart1.Series.Add(series1);
             this.chart1.Series.Add(series2);
             this.chart1.Series.Add(series3);
-            this.chart1.Size = new System.Drawing.Size(1093, 554);
+            this.chart1.Size = new System.Drawing.Size(1224, 584);
             this.chart1.TabIndex = 3;
             this.chart1.Text = "chart1";
             // 
@@ -377,7 +564,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1100, 749);
+            this.ClientSize = new System.Drawing.Size(1230, 791);
             this.Controls.Add(this.chart1);
             this.Controls.Add(this.localStatusStrip);
             this.Controls.Add(this.groupBox3);
@@ -388,6 +575,12 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -431,6 +624,23 @@
         private System.Windows.Forms.ToolStripStatusLabel localTime;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.Button btnSendAndRead;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox txOffset;
+        private System.Windows.Forms.TextBox txIndex;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.RadioButton radioDiff;
+        private System.Windows.Forms.RadioButton radioSingle;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox combUnit;
+        private System.Windows.Forms.TextBox txMin;
+        private System.Windows.Forms.TextBox txMax;
+        private System.Windows.Forms.TextBox txTargetValue;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button btnTest;
     }
 }
 

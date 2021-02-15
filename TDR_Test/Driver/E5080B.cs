@@ -47,6 +47,13 @@ namespace TDR_Test.Driver
             return QueryErrorStatus(out response);
         }
 
+        public int ExecuteCmd(string command)
+        {
+            int count;
+            visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command + "\n"), command.Length, out count);            
+            return count;
+        }
+
         public int QueryCommand(string command, out string response)
         {
             int errorno, count;
@@ -55,6 +62,19 @@ namespace TDR_Test.Driver
             errorno = visa32.viRead(analyzerSession, result, 256, out count);
             response = Encoding.ASCII.GetString(result, 0, count);
             return errorno;
+        }
+
+        public int QueryCommand(string command, out string response,int len)
+        {
+            int  count;
+            byte[] result = new byte[len];
+
+            visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command + "\n"), command.Length, out count);
+            visa32.viRead(analyzerSession, result, len, out count);
+
+            response = Encoding.ASCII.GetString(result, 0, count);
+
+            return count;
         }
 
         #region IEEE488.2 Standard Common Commands

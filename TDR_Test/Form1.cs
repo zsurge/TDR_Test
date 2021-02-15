@@ -22,7 +22,7 @@ namespace TDR_Test
         }
 
         E5080B analyzer = new E5080B();
-
+        LoggerHelper logger = new LoggerHelper();
         private void Form1_Load(object sender, EventArgs e)
         {
             //初始化状态栏
@@ -209,27 +209,57 @@ namespace TDR_Test
 
         private void btnOpen_Click(object sender, EventArgs e)
         {
-            int error = analyzer.Open(combDevString.Text);
-            string idn;
-            error = analyzer.GetInstrumentIdentifier(out idn);
-            //error = analyzer.ClearAllErrorQueue();
-            //error = analyzer.Preset();
-            
-            listboxResult.Items.Add(idn);
-            listboxResult.TopIndex = listboxResult.Items.Count - 1;
+            //这里先判定是否已做开路，若已坐开路，则只打开设备，若没有做开路，则做开路设定
+            if (GetIndex.isOpen)
+            {
+                //表示已经开路定义过，只需要打开窗口即可
+                int error = analyzer.Open(combDevString.Text);
+                string idn = string.Empty;
+                error = analyzer.GetInstrumentIdentifier(out idn);
+                SetRecvListSafe(idn);
+
+                string cmd2 = "FORM:DATA ASCII";
+                analyzer.ExecuteCmd(cmd2);
+
+                string cmd3 = "MMEM:STOR:TRAC:FORM:SNP MA";
+                analyzer.ExecuteCmd(cmd3);
+                logger.Debug("open dev");
+            }
+            else
+            {
+                //表示没有开路定义
+                int error = analyzer.Open(combDevString.Text);
+                string idn = string.Empty;
+                error = analyzer.GetInstrumentIdentifier(out idn);
+                SetRecvListSafe(idn);
+
+                string cmd2 = "FORM:DATA ASCII";
+                analyzer.ExecuteCmd(cmd2);
+
+                string cmd3 = "MMEM:STOR:TRAC:FORM:SNP MA";
+                analyzer.ExecuteCmd(cmd3);
+                logger.Debug("open dev and get index value");
+                GetIndexValue();
+            }
+
         }
 
         private void btnSend_Click(object sender, EventArgs e)
         {
-            analyzer.ExecuteCommand(combCommand.SelectedItem.ToString());
+            analyzer.ExecuteCmd(combCommand.SelectedItem.ToString());
         }
 
+        /// <summary>
+        /// 
+        ///发送指令并且读取返回值
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSendAndRead_Click(object sender, EventArgs e)
         {
             string result = string.Empty;
             analyzer.QueryCommand(combCommand.SelectedItem.ToString(),out result);
-            listboxResult.Items.Add(result);
-            listboxResult.TopIndex = listboxResult.Items.Count - 1;
+            SetRecvListSafe(result);
         }
 
         private void btnClear_Click(object sender, EventArgs e)
@@ -241,15 +271,140 @@ namespace TDR_Test
         {
             analyzer.viClose();
         }
+
+        delegate void SetRecvListSafeCallback(string text);
+        public void SetRecvListSafe(string text)
+        {
+            if (this.listboxResult.InvokeRequired)
+            {
+                SetRecvListSafeCallback d = new SetRecvListSafeCallback(SetRecvListSafe);
+                this.Invoke(d, new object[] { text });
+            }
+            else
+            {                
+                this.listboxResult.Items.Add(text);
+                this.listboxResult.TopIndex = listboxResult.Items.Count - 1;
+            }
+        }
+
+
+        /// <summary>
+        /// 获取开路的索引值
+        /// </summary>
+        private void GetIndexValue()
+        {
+            string result = string.Empty;           
+            string cmd4 = "CALCulate:PARameter:CAT?";
+            analyzer.QueryCommand(cmd4, out result,256);
+            SetRecvListSafe(result);
+            result = string.Empty;
+
+            string cmd5 = ":CALCulate1:TRANsform:TIME:STARt -5E-10";
+            analyzer.ExecuteCmd(cmd5);
+
+            string cmd6 = ":CALCulate1:TRANsform:TIME:STOP 9.5E-9";
+            analyzer.ExecuteCmd(cmd6);
+
+            string cmd7 = ":SENSe1:SWEep:POINts?";            
+            analyzer.QueryCommand(cmd7, out result, 256);
+            SetRecvListSafe(result);
+            result = string.Empty;
+
+            string cmd8 = ":CALCulate1:TRANsform:TIME:STARt?";
+            analyzer.QueryCommand(cmd8, out result, 256);
+            SetRecvListSafe(result);
+            result = string.Empty;
+
+            string cmd9 = ":CALCulate1:TRANsform:TIME:STOP?";
+            analyzer.QueryCommand(cmd9, out result, 256);
+            SetRecvListSafe(result);
+            result = string.Empty;
+
+            string cmd10 = ":INITiate1:CONTinuous ON";
+            analyzer.ExecuteCmd(cmd10);
+
+            string cmd11 = ":CALC:PAR:SEL \"win1_tr2\"";
+            analyzer.ExecuteCmd(cmd11);
+            analyzer.viClear();
+
+            string cmd12 = ":CALCulate1:DATA? FDATa";
+            analyzer.QueryCommand(cmd12, out result, 200000); 
+            string[] tdd22_array = result.Split(new char[] { ',' });
+            result = string.Empty;
+            //查找tdd22的索引值
+            for (int i = 0; i < tdd22_array.Length; i++)
+            {
+                //logger.Trace(tdd22_array[i]);
+                if (Convert.ToSingle(tdd22_array[i]) > Convert.ToSingle(txIndex.Text))
+                {
+                    logger.Debug((i-1).ToString() + " = " + tdd22_array[i-1]);
+                    GetIndex.tdd22IndexValue = i - 1;
+                    break;
+                }
+            }
+
+
+            string cmd13 = ":CALC:PAR:SEL \"win1_tr1\"";
+            analyzer.ExecuteCmd(cmd13);
+            analyzer.viClear();
+
+            string cmd14 = ":CALCulate1:DATA? FDATa";
+            analyzer.QueryCommand(cmd14, out result, 200000);
+            string[] tdd11_array = result.Split(new char[] { ',' });
+            for (int i = 0; i < tdd11_array.Length; i++)
+            {
+                //logger.Info(tdd11_array[i]);
+                if (Convert.ToSingle(tdd11_array[i]) > Convert.ToSingle(txIndex.Text))
+                {
+                    logger.Debug((i-1).ToString() + " = " + tdd11_array[i-1]);
+                    GetIndex.tdd11IndexValue = i-1;
+                    break;
+                }
+            }
+            //查找tdd11的索引值
+            result = string.Empty;
+
+            GetIndex.isOpen = true;
+        }
+
+        private void startMeasuration()
+        {
+            //这里需要分单端测试和差分测试
+            if (radioSingle.Checked)
+            {
+                //这里是单端测试
+            }
+            else if (radioDiff.Checked)
+            {
+                //这里是差分测试
+
+            }
+        }
+
+
+
     }//end form class
 
-    public static class common
+    public static class GetIndex
     {
+        //这里来定义是否已经开路，并记录下开路的值
         private static bool isopen = false;
+        private static int tdd1indexvalue = 0;
+        private static int tdd2Indexvalue = 0;
         public static bool isOpen
         {
             get { return isopen; }
             set { isopen = value; }
+        }
+        public static int tdd11IndexValue
+        {
+            get { return tdd1indexvalue; }
+            set { tdd1indexvalue = value; }
+        }
+        public static int tdd22IndexValue
+        {
+            get { return tdd2Indexvalue; }
+            set { tdd2Indexvalue = value; }
         }
     }
 }
